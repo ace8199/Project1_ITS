@@ -14,7 +14,7 @@ public class TravProf {
         // not sure how to setup medcond
     }
 
-    public String gettavAgentID(){
+    public String gettravAgentID(){
         return this.travAgentID;
     }
     public String getFirstName(){
