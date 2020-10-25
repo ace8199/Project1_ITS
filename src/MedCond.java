@@ -1,7 +1,7 @@
 public class MedCond {
     String mdContact, mdPhone, algType, illType;
 
-    public MedCond(String mdContact, String mdPhone, String algType, str illType) {
+    public MedCond(String mdContact, String mdPhone, String algType, String illType) {
         this.mdContact = mdContact;
         this.mdPhone = mdPhone;
         this.algType = algType;

@@ -1,8 +1,10 @@
-public class TravProf {
+import java.io.Serializable;
+public class TravProf implements Serializable{
     String travAgentID,firstName,lastName,address,phone,travelType,paymentType;
     Float tripCost;
+    MedCond[] medCondInfo;
 
-    TravProf(String id,String first,String last,String street,String number,Float cost,String travel,String paytype){
+    TravProf(String id,String first,String last,String street,String number,Float cost,String travel,String paytype, MedCond[] medCond){
         this.travAgentID = id;
         this.firstName = first;
         this.lastName = last;
@@ -11,6 +13,7 @@ public class TravProf {
         this.tripCost = cost;
         this.travelType = travel;
         this.paymentType = paytype;
+        this.medCondInfo = medCond;
         // not sure how to setup medcond
     }
 
@@ -38,6 +41,10 @@ public class TravProf {
     public String getPaymentType(){
         return this.paymentType;
     }
+    public MedCond[] getMedCondInfo(){
+        return this.medCondInfo;
+    }
+
 
     public void updateFirstName(String first){
         this.firstName = first;
@@ -54,12 +61,14 @@ public class TravProf {
     public void updateTripCost(float cost){
         this.tripCost = cost;
     }
-    public void updateTravelType(String type){
-        this.travelType = type;
+    public void updateTravelType(String travel){
+        this.travelType = travel;
     }
-    public void updatePaymentType(String type){
-        this.paymentType = type;
+    public void updatePaymentType(String paytype){
+        this.paymentType = paytype;
     }
-
+    public void updateMedCondInfo(MedCond[] medCond){
+        this.medCondInfo = medCond;
+    }
 
 }
