@@ -1,20 +1,20 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class TravProfDB {
     int numTravelers, currentTravelerIndex;
-    String fileName;
+    String dbName = "ITS_DB";
     ArrayList<TravProf> travelerList;
+
 
     public TravProfDB(String fileName) {
         this.numTravelers = 0;
         this.currentTravelerIndex = -1;
         this.travelerList = new ArrayList<TravProf>();
 
-        initializeDataBase(fileName);
-        findFirstProfile()
+        initializeDataBase();
+        findFirstProfile();
     }
 
     public void insertNewProfile(TravProf profile) {
@@ -52,12 +52,17 @@ public class TravProfDB {
         this.currentTravelerIndex++;
         return this.travelerList.get(this.currentTravelerIndex);
     }
+    void writeAllTravProf() throws IOException{                              // Save
+        FileOutputStream outputStream = new FileOutputStream(dbName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
-    private initializeDataBase(String fileName) {
-        Scanner s = new Scanner(new File(fileName));
-        while (s.hasNextLine()){
-            insertNewProfile(s.nextLine());
-        }
-        //update this.numTravelers
+        objectOutputStream.writeObject(travelerList);
+        objectOutputStream.close();
+    }
+    void initializeDataBase() throws IOException,ClassNotFoundException{     // Load
+        FileInputStream inputStream = new FileInputStream(dbName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+
+        this.travelerList = (ArrayList<TravProf>)objectInputStream.readObject();
     }
 }
