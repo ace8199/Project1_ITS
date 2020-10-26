@@ -1,8 +1,6 @@
 import java.util.Scanner;
 public class TravProfInterface {
     public static void  main (String[ ] args) {
-        TravProf[] obj = new TravProf[100] ;
-
         //menu options
         while(true) {
             System.out.println("Welcome to Kayne ITS");
@@ -15,29 +13,30 @@ public class TravProfInterface {
             System.out.println("(6) Write to database");
             System.out.println("(7) Initialize database");
             System.out.println("(0) Exit");
-            Scanner in = new Scanner(System.in);
-            int options = in.nextInt();
-            if(options == 0){
-                break;
-            }
 
-            getUserChoice(obj,options);
+
+            getUserChoice();
 
         }
     }
 
-    public static void getUserChoice(TravProf[]  obj,int options){
+    public static void getUserChoice(){
+        Scanner in = new Scanner(System.in);
+        int options = in.nextInt();
+        if(options == 0){
+            break loop;
+        }
         if (options == 1){
-            createNewTravProf(obj);
+            createNewTravProf();
         }else if(options == 2){
             deleteTravProf();
         }else if(options == 3){
             findTravProf();
-            displayTravProf(obj);
+            displayTravProf();
         }else if(options == 4){
             UpdateTravProf();
         }else if(options == 5){
-            displayAllTravProf(obj);
+            displayAllTravProf();
         }else if(options == 6){
             writeToDB();
         }else if(options == 7){
@@ -95,7 +94,7 @@ public class TravProfInterface {
         System.out.println("Payment type:");
         String paytype = in.nextLine();
 
-        obj[0] = new TravProf(travAgentID,firstname,lastname,address,number,tripcost,traveltype,paytype);
+        //obj[0] = new TravProf(travAgentID,firstname,lastname,address,number,tripcost,traveltype,paytype,medCondInfo);
 
         return obj;
     }
