@@ -1,10 +1,11 @@
 import java.io.Serializable;
+
 public class TravProf implements Serializable{
     String travAgentID,firstName,lastName,address,phone,travelType,paymentType;
     Float tripCost;
-    MedCond[] medCondInfo;
+    MedCond medCondInfo;
 
-    TravProf(String id,String first,String last,String street,String number,Float cost,String travel,String paytype, MedCond[] medCond){
+    TravProf(String id,String first,String last,String street,String number,Float cost,String travel,String paytype, MedCond medCond){
         this.travAgentID = id;
         this.firstName = first;
         this.lastName = last;
@@ -41,7 +42,7 @@ public class TravProf implements Serializable{
     public String getPaymentType(){
         return this.paymentType;
     }
-    public MedCond[] getMedCondInfo(){
+    public MedCond getMedCondInfo(){
         return this.medCondInfo;
     }
 
@@ -67,7 +68,7 @@ public class TravProf implements Serializable{
     public void updatePaymentType(String paytype){
         this.paymentType = paytype;
     }
-    public void updateMedCondInfo(MedCond[] medCond){
+    public void updateMedCondInfo(MedCond medCond){
         this.medCondInfo = medCond;
     }
 

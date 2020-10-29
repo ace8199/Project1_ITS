@@ -1,8 +1,15 @@
 import java.util.Scanner;
+
 public class TravProfInterface {
-    public static void  main (String[ ] args) {
+
+    public TravProfInterface(String dbFile) {
+        this.db = TravProfDB(dbFile);
+    }
+
+    public static void main(String[] args) {
         //menu options
-        while(true) {
+        boolean run = true;
+        while(run) {
             System.out.println("Welcome to Kayne ITS");
             System.out.println("Please enter the number that corresponds with the menu options");
             System.out.println("(1) Enter a New TravProf");
@@ -14,68 +21,173 @@ public class TravProfInterface {
             System.out.println("(7) Initialize database");
             System.out.println("(0) Exit");
 
-
-            getUserChoice();
-
+            run = getUserChoice();
         }
     }
 
-    public static void getUserChoice(){
+    public static boolean getUserChoice(){
         Scanner in = new Scanner(System.in);
-        int options = in.nextInt();
-        if(options == 0){
-            break loop;
-        }
-        if (options == 1){
-            createNewTravProf();
-        }else if(options == 2){
-            deleteTravProf();
-        }else if(options == 3){
-            findTravProf();
-            displayTravProf();
-        }else if(options == 4){
-            UpdateTravProf();
-        }else if(options == 5){
-            displayAllTravProf();
-        }else if(options == 6){
-            writeToDB();
-        }else if(options == 7){
-            initDB();
+        int option = in.nextInt();
+
+        switch (option) {
+            case 0:
+                return false;
+            case 1:
+                return createNewTravProf();
+            case 2
+                return deleteTravProf();
+            case 3:
+                findTravProf();
+                return displayTravProf();
+            case 4:
+                return UpdateTravProf();
+            case 5:
+                return displayAllTravProf();
+            case 6:
+                return writeToDB();
+            case 7:
+                return initDB();
         }
     }
-    public static void deleteTravProf(){
 
+    public boolean deleteTravProf(){
+        String[] profile = promptProfile();
+        boolean deleted = this.db.deleteProfile(profile[0], profile[1]);
+        if (deleted) {
+            System.out.println("Deleted.");
+        }
+        else {
+            System.out.println("Profile doesn't exist.");
+        }
+        return true;
     }
-    public static void findTravProf(){
 
+    public boolean findTravProf(){
+        String[] profile = promptProfile();
+        TravProf tp = this.db.findProfile(profile[0], profile[1]);
+        if (tp != null) {
+            displayTravProf(tp);
+        }
+        else {
+            System.out.println("Profile doesn't exist.");
+        }
+        return true;
     }
     public static void UpdateTravProf(){
+        String[] profile = promptProfile();
+        TravProf tp = this.db.findProfile(profile[0], profile[1]);
+        if (tp != null) {
+            System.out.println("What would you like to update?");
+            System.out.println("(1) Update traveler's personal information");
+            System.out.println("(2) Update traveler's medical information");
 
-    }
-    public static void displayTravProf(TravProf[] obj){
-        //System.out.println(obj[0].g);
-        System.out.println(obj[0].getFirstName());
-        System.out.println(obj[0].getLastName());
-    }
-    public static void displayAllTravProf(TravProf[] obj) {
-        for (int i = 0; i < obj.length; i++) {
-            System.out.println(obj[i].getFirstName());
-            System.out.println(obj[i].getLastName());
-            System.out.println(obj[i].getAddress());
-            System.out.println(obj[i].getPhone());
-            System.out.println(obj[i].getTripCost());
-            System.out.println(obj[i].getTravelType());
-            System.out.println(obj[i].getPaymentType());
-            System.out.println("-----------------------");
+            Scanner in = new Scanner(System.in);
+            int option = in.nextInt();
+
+            switch (option) {
+                case 1: {
+                    System.out.println("Select the personal information to update.");
+                    System.out.println("(1) Address");
+                    System.out.println("(2) Phone");
+                    System.out.println("(3) Travel Type");
+                    System.out.println("(4) Trip Cost");
+                    System.out.println("(5) Payment Type");
+                    option = in.nextInt();
+                    System.out.println("Enter new information:");
+                    String newInfo = in.nextLine();
+                    switch (option) {
+                        case 1: {
+                            tp.updateAddress(newInfo);
+                            return true;
+                        }
+                        case 2: {
+                            tp.updatePhone(newInfo);
+                            return true;
+                        }
+                        case 3: {
+                            tp.updateTravelType(newInfo);
+                            return true;
+                        }
+                        case 4: {
+                            tp.updateTripCost(newInfo);
+                            return true;
+                        }
+                        case 5: {
+                            tp.updatePaymentType(newInfo);
+                            return true;
+                        }
+                    }
+                }
+                case 2: {
+                    System.out.println("Select the medical information to update.");
+                    System.out.println("(1) Medical Contact's Name");
+                    System.out.println("(2) Medical Contact's Phone #");
+                    System.out.println("(3) Illnesses");
+                    System.out.println("(4) Allergies");
+                    option = in.nextInt();
+                    System.out.println("Enter new information:");
+                    String newInfo = in.nextLine();
+                    MedCond medInfo = tp.getMedCondInfo()
+                    switch (option) {
+                        case 1: {
+                            medInfo.updateMdContact(newInfo);
+                            return true;
+                        }
+                        case 2: {
+                            medInfo.updateMdPhone(newInfo);
+                            return true;
+                        }
+                        case 3: {
+                            medInfo.updateIllType(newInfo);
+                            return true;
+                        }
+                        case 4: {
+                            medInfo.updateAlgType(newInfo);
+                            return true;
+                        }
+                    }
+                }
+            }
         }
     }
-    public static void writeToDB(){
+    public static boolean displayTravProf(TravProf tp){
+        System.out.printf("ID: %s%n", tp.gettraveAgentID());
+        System.out.printf("First Name: %s%n", tp.getFirstName());
+        System.out.printf("Last Name: %s%n", tp.getLastName());
+        System.out.printf("Address: %s%n", tp.getAddress());
+        System.out.printf("Phone Number: %s%n", tp.getPhone());
+        System.out.printf("Trip Cost: %s%n", tp.getTripCost());
+        System.out.printf("Travel Type: %s%n", tp.getTravelType());
+        System.out.printf("Payment Type: %s%n", tp.getPaymentType());
+        System.out.printf("Medical Condition: %s%n", tp.getMedCondInfo());
 
+        return true;
     }
-    public static void initDB(){
 
+    public boolean displayAllTravProf() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Agent ID:");
+        String travAgentID = in.nextLine();
+
+        TravProf p = this.db.findFirstProfile();
+        while (p != null) {
+            if (TravProf.gettravAgentID() == travAgentID) {
+                displayTravProf(p);
+            }
+            p = this.db.findNextProfile();
+        }
+        return true;
     }
-    public static TravProf[] createNewTravProf(TravProf[] obj){
+
+    public boolean writeToDB(){
+        this.db.writeAllTravProf();
+        return true;
+    }
+    public boolean initDB(){
+        this.db.initializeDataBase();
+        return true;
+    }
+    public boolean createNewTravProf(){
         Scanner in = new Scanner(System.in);
         System.out.println("Please enter your credentials");
         String travAgentID = in.nextLine();
@@ -94,11 +206,32 @@ public class TravProfInterface {
         System.out.println("Payment type:");
         String paytype = in.nextLine();
 
-        //obj[0] = new TravProf(travAgentID,firstname,lastname,address,number,tripcost,traveltype,paytype,medCondInfo);
+        MedCond md = createNewMedCond();
 
-        return obj;
+        TravProf tp = new TravProf(travAgentID, firstname, lastname, address, number, tripcost, traveltype, paytype, md);
+        this.db.insertNewProfile(tp);
+        return true;
     }
-    public void createNewMedCont(){
+    public MedCond createNewMedCond(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Medical contact name:");
+        String contact = in.nextLine();
+        System.out.println("Medical contact's phone number:");
+        String number = in.nextLine();
+        System.out.println("Allergies (none, food, medication, or other):");
+        String allergies = in.nextLine();
+        System.out.println("Illnesses (none, heart, diabetes, asthma, or other):");
+        String illnesses = in.nextLine();
 
+        return new MedCond(contact, number, allergies, illnesses)
+    }
+
+    private static String[] promptProfile() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Agent ID:");
+        String travAgentID = in.nextLine();
+        System.out.println("Last Name:");
+        String lastName = in.nextLine();
+        return new String[] {travAgentID, lastName};
     }
 }

@@ -12,6 +12,7 @@ public class TravProfDB {
         this.numTravelers = 0;
         this.currentTravelerIndex = -1;
         this.travelerList = new ArrayList<TravProf>();
+        this.dbName = fileName;
 
         initializeDataBase();
         findFirstProfile();
@@ -45,12 +46,18 @@ public class TravProfDB {
 
     public TravProf findFirstProfile() {
         this.currentTravelerIndex = 0;
-        return this.travelerList.get(this.currentTravelerIndex);
+        if (this.currentTravelerIndex < this.travelerList.length()){
+            return this.travelerList.get(this.currentTravelerIndex);
+        }
+        return null;
     }
 
     public TravProf findNextProfile() {
         this.currentTravelerIndex++;
-        return this.travelerList.get(this.currentTravelerIndex);
+        if (this.currentTravelerIndex < this.travelerList.length()){
+            return this.travelerList.get(this.currentTravelerIndex);
+        }
+        return null;
     }
     void writeAllTravProf() throws IOException{                              // Save
         FileOutputStream outputStream = new FileOutputStream(dbName);
