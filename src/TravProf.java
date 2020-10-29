@@ -15,7 +15,6 @@ public class TravProf implements Serializable{
         this.travelType = travel;
         this.paymentType = paytype;
         this.medCondInfo = medCond;
-        // not sure how to setup medcond
     }
 
     public String gettravAgentID(){

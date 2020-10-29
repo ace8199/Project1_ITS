@@ -24,9 +24,9 @@ public class TravProfDB {
 
     public boolean deleteProfile(String travAgentID, String lastName) {
         // Returns true if TravProf with travAgentID and lastName is found and deleted
-        for (int i = 0; i < this.travelerList.length; i++) {
-            TravProf curr = this.travelerList[i];
-            if (curr.gettraveAgentID() == travAgentID & curr.getLastName() == lastName) {
+        for (int i = 0; i < this.travelerList.size(); i++) {
+            TravProf curr = this.travelerList.get(i);
+            if (curr.gettravAgentID() == travAgentID & curr.getLastName() == lastName) {
                 this.travelerList.remove(i);
                 return true;
             }
@@ -35,9 +35,9 @@ public class TravProfDB {
     }
 
     public TravProf findProfile(String travAgentID, String lastName) {
-        for (int i = 0; i < this.travelerList.length; i++) {
-            TravProf curr = this.travelerList[i];
-            if (curr.gettraveAgentID() == travAgentID & curr.getLastName() == lastName) {
+        for (int i = 0; i < this.travelerList.size(); i++) {
+            TravProf curr = this.travelerList.get(i);
+            if (curr.gettravAgentID() == travAgentID & curr.getLastName() == lastName) {
                 return curr;
             }
         }
@@ -46,7 +46,7 @@ public class TravProfDB {
 
     public TravProf findFirstProfile() {
         this.currentTravelerIndex = 0;
-        if (this.currentTravelerIndex < this.travelerList.length()){
+        if (this.currentTravelerIndex < this.travelerList.size()){
             return this.travelerList.get(this.currentTravelerIndex);
         }
         return null;
@@ -54,7 +54,7 @@ public class TravProfDB {
 
     public TravProf findNextProfile() {
         this.currentTravelerIndex++;
-        if (this.currentTravelerIndex < this.travelerList.length()){
+        if (this.currentTravelerIndex < this.travelerList.size()){
             return this.travelerList.get(this.currentTravelerIndex);
         }
         return null;

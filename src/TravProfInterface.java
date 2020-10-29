@@ -34,7 +34,7 @@ public class TravProfInterface {
                 return false;
             case 1:
                 return createNewTravProf();
-            case 2
+            case 2:
                 return deleteTravProf();
             case 3:
                 findTravProf();
@@ -127,7 +127,7 @@ public class TravProfInterface {
                     option = in.nextInt();
                     System.out.println("Enter new information:");
                     String newInfo = in.nextLine();
-                    MedCond medInfo = tp.getMedCondInfo()
+                    MedCond medInfo = tp.getMedCondInfo();
                     switch (option) {
                         case 1: {
                             medInfo.updateMdContact(newInfo);
@@ -223,7 +223,7 @@ public class TravProfInterface {
         System.out.println("Illnesses (none, heart, diabetes, asthma, or other):");
         String illnesses = in.nextLine();
 
-        return new MedCond(contact, number, allergies, illnesses)
+        return new MedCond(contact, number, allergies, illnesses);
     }
 
     private static String[] promptProfile() {
