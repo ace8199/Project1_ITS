@@ -8,7 +8,7 @@ public class TravProfDB {
     ArrayList<TravProf> travelerList;
 
 
-    public TravProfDB(String fileName) {
+    public TravProfDB(String fileName) throws IOException, ClassNotFoundException {
         this.numTravelers = 0;
         this.currentTravelerIndex = -1;
         this.travelerList = new ArrayList<TravProf>();
@@ -67,7 +67,7 @@ public class TravProfDB {
         objectOutputStream.close();
     }
     void initializeDataBase() throws IOException,ClassNotFoundException{     // Load
-        FileInputStream inputStream = new FileInputStream(dbName);
+        FileInputStream inputStream = new FileInputStream(this.dbName);
         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
         this.travelerList = (ArrayList<TravProf>)objectInputStream.readObject();
