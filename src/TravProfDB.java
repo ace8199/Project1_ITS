@@ -12,8 +12,8 @@ public class TravProfDB {
         this.numTravelers = 0;
         this.currentTravelerIndex = -1;
         this.dbName = fileName;
+        this.travelerList = new ArrayList<TravProf>();
 
-        initializeDataBase();
         findFirstProfile();
     }
 
@@ -73,7 +73,7 @@ public class TravProfDB {
             this.travelerList = (ArrayList<TravProf>)objectInputStream.readObject();
             objectInputStream.close();
         } catch (EOFException eofex) {
-            this.travelerList = new ArrayList<TravProf>();
+            //do nothing
         } catch (IOException ioex) {
             throw ioex;
         }

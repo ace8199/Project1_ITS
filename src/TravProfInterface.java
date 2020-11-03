@@ -15,7 +15,7 @@ public class TravProfInterface {
 
         boolean run = true;
         while(run) {
-            System.out.println("Welcome to Kayne ITS");
+            System.out.println("Welcome to the ITS");
             System.out.println("Please enter the number that corresponds with the menu options");
             System.out.println("(1) Enter a New TravProf");
             System.out.println("(2) Delete a traveler by Name and travelAgentID");
@@ -32,7 +32,8 @@ public class TravProfInterface {
 
     public static boolean getUserChoice() throws IOException, ClassNotFoundException{
         Scanner in = new Scanner(System.in);
-        int option = in.nextInt();
+        String line = in.nextLine();
+        int option = Integer.parseInt(line);
 
         switch (option) {
             case 0:
@@ -53,7 +54,7 @@ public class TravProfInterface {
                 return initDB();
             default: {
                 System.out.print("Invalid option");
-                return false;
+                return true;
             }
         }
     }
@@ -97,53 +98,114 @@ public class TravProfInterface {
             System.out.println("(9) Allergies");
 
             Scanner in = new Scanner(System.in);
-            int option = in.nextInt();
+            String line = in.nextLine();
+            int option = Integer.parseInt(line);
 
             while (option < 1 | option > 9) {
                 System.out.println("Invalid option");
-                option = in.nextInt();
+                option = Integer.parseInt(in.nextLine());
             }
 
-            System.out.println("What's the new info?");
-            String newInfo = in.nextLine();
-
+            String newInfo = "";
             MedCond medInfo = tp.getMedCondInfo();
 
             switch (option) {
                 case 1: {
+                    System.out.println("What's the new info?");
+                    newInfo = in.nextLine();
                     tp.updateAddress(newInfo);
                     return true;
                 }
                 case 2: {
+                    System.out.println("What's the new info?");
+                    newInfo = in.nextLine();
                     tp.updatePhone(newInfo);
                     return true;
                 }
                 case 3: {
+                    System.out.println("New Travel Type? (1) Business (2) Pleasure");
+                    option = Integer.parseInt(in.nextLine());
+                    switch (option){
+                        case 1: newInfo = "Business"; break;
+                        case 2: newInfo = "Pleasure"; break;
+                        default: {
+                            System.out.println("Invalid!");
+                            System.out.println("New Travel Type? (1) Business (2) Pleasure");
+                            option = Integer.parseInt(in.nextLine());
+                        }
+                    }
+
                     tp.updateTravelType(newInfo);
                     return true;
                 }
                 case 4: {
+                    System.out.println("What's the new info?");
+                    newInfo = in.nextLine();
                     float newcost = Float.valueOf(newInfo);
                     tp.updateTripCost(newcost);
                     return true;
                 }
                 case 5: {
+                    System.out.println("New Payment Type? (1) Credit (2) Check (3) Debit (4) Invoice");
+                    option = Integer.parseInt(in.nextLine());
+                    switch (option){
+                        case 1: newInfo = "Credit"; break;
+                        case 2: newInfo = "Check"; break;
+                        case 3: newInfo = "Debit"; break;
+                        case 4: newInfo = "Invoice"; break;
+                        default: {
+                            System.out.println("Invalid!");
+                            System.out.println("New Payment Type? (1) Credit (2) Check (3) Debit (4) Invoice");
+                            option = Integer.parseInt(in.nextLine());
+                        }
+                    }
                     tp.updatePaymentType(newInfo);
                     return true;
                 }
                 case 6: {
+                    System.out.println("What's the new info?");
+                    newInfo = in.nextLine();
                     medInfo.updateMdContact(newInfo);
                     return true;
                 }
                 case 7: {
+                    System.out.println("What's the new info?");
+                    newInfo = in.nextLine();
                     medInfo.updateMdPhone(newInfo);
                     return true;
                 }
                 case 8: {
+                    System.out.println("New Illness Type? (1) none (2) heart (3) diabetes (4) asthma (5) other");
+                    option = Integer.parseInt(in.nextLine());
+                    switch (option){
+                        case 1: newInfo = "none"; break;
+                        case 2: newInfo = "heart"; break;
+                        case 3: newInfo = "diabetes"; break;
+                        case 4: newInfo = "asthma"; break;
+                        case 5: newInfo = "other"; break;
+                        default: {
+                            System.out.println("Invalid!");
+                            System.out.println("New Illness Type? (1) none (2) heart (3) diabetes (4) asthma (5) other");
+                            option = Integer.parseInt(in.nextLine());
+                        }
+                    }
                     medInfo.updateIllType(newInfo);
                     return true;
                 }
                 case 9: {
+                    System.out.println("New Allergies? (1) none (2) food (3) medication (4) other");
+                    option = Integer.parseInt(in.nextLine());
+                    switch (option){
+                        case 1: newInfo = "none"; break;
+                        case 2: newInfo = "food"; break;
+                        case 3: newInfo = "medication"; break;
+                        case 4: newInfo = "other"; break;
+                        default: {
+                            System.out.println("Invalid!");
+                            System.out.println("New Allergies? (1) none (2) food (3) medication (4) other");
+                            option = Integer.parseInt(in.nextLine());
+                        }
+                    }
                     medInfo.updateAlgType(newInfo);
                     return true;
                 }
@@ -208,10 +270,36 @@ public class TravProfInterface {
         System.out.println("Trip cost:");
         String cost = in.nextLine();
         float tripcost = Float.valueOf(cost);
-        System.out.println("Travel Type:");
-        String traveltype = in.nextLine();
-        System.out.println("Payment type:");
-        String paytype = in.nextLine();
+
+        System.out.println("Travel Type (1) Business (2) Pleasure:");
+        String line = in.nextLine();
+        int option = Integer.parseInt(line);
+        String traveltype = "";
+        switch (option){
+            case 1: traveltype = "Business"; break;
+            case 2: traveltype = "Pleasure"; break;
+            default: {
+                System.out.println("Invalid!");
+                System.out.println("Travel Type (1) Business (2) Pleasure:");
+                option = Integer.parseInt(in.nextLine());
+            }
+        }
+
+        System.out.println("Payment type (1) Credit (2) Check (3) Debit (4) Invoice:");
+        line = in.nextLine();
+        option = Integer.parseInt(line);
+        String paytype = "";
+        switch (option){
+            case 1: paytype = "Credit"; break;
+            case 2: paytype = "Check"; break;
+            case 3: paytype = "Debit"; break;
+            case 4: paytype = "Invoice"; break;
+            default: {
+                System.out.println("Invalid!");
+                System.out.println("Payment type (1) Credit (2) Check (3) Debit (4) Invoice:");
+                option = Integer.parseInt(in.nextLine());
+            }
+        }
 
         MedCond md = createNewMedCond();
 
@@ -225,10 +313,39 @@ public class TravProfInterface {
         String contact = in.nextLine();
         System.out.println("Medical contact's phone number:");
         String number = in.nextLine();
-        System.out.println("Allergies (none, food, medication, or other):");
-        String allergies = in.nextLine();
-        System.out.println("Illnesses (none, heart, diabetes, asthma, or other):");
-        String illnesses = in.nextLine();
+
+        System.out.println("Allergies (1) none (2) food (3) medication (4) other:");
+        String line = in.nextLine();
+        int option = Integer.parseInt(line);
+        String allergies = "";
+        switch (option){
+            case 1: allergies = "none"; break;
+            case 2: allergies = "food"; break;
+            case 3: allergies = "medication"; break;
+            case 4: allergies = "other"; break;
+            default: {
+                System.out.println("Invalid!");
+                System.out.println("Allergies (1) none (2) food (3) medication (4) other:");
+                option = Integer.parseInt(in.nextLine());
+            }
+        }
+
+        System.out.println("Illnesses (1) none (2) heart (3) diabetes (4) asthma (5) other:");
+        line = in.nextLine();
+        option = Integer.parseInt(line);
+        String illnesses = "";
+        switch (option){
+            case 1: illnesses = "none"; break;
+            case 2: illnesses = "heart"; break;
+            case 3: illnesses = "diabetes"; break;
+            case 4: illnesses = "asthma"; break;
+            case 5: illnesses = "other"; break;
+            default: {
+                System.out.println("Invalid!");
+                System.out.println("Illnesses (1) none (2) heart (3) diabetes (4) asthma (5) other:");
+                option = Integer.parseInt(in.nextLine());
+            }
+        }
 
         return new MedCond(contact, number, allergies, illnesses);
     }
