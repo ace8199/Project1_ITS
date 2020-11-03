@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class TravProfDB {
     int numTravelers, currentTravelerIndex;
-    String dbName = "ITS_DB";
+    String dbName;
     ArrayList<TravProf> travelerList;
 
 
     public TravProfDB(String fileName) throws IOException, ClassNotFoundException {
         this.numTravelers = 0;
         this.currentTravelerIndex = -1;
-        this.travelerList = new ArrayList<TravProf>();
         this.dbName = fileName;
 
         initializeDataBase();
@@ -26,7 +25,7 @@ public class TravProfDB {
         // Returns true if TravProf with travAgentID and lastName is found and deleted
         for (int i = 0; i < this.travelerList.size(); i++) {
             TravProf curr = this.travelerList.get(i);
-            if (curr.gettravAgentID() == travAgentID & curr.getLastName() == lastName) {
+            if (curr.gettravAgentID().equals(travAgentID) & curr.getLastName().equals(lastName)) {
                 this.travelerList.remove(i);
                 return true;
             }
@@ -37,7 +36,7 @@ public class TravProfDB {
     public TravProf findProfile(String travAgentID, String lastName) {
         for (int i = 0; i < this.travelerList.size(); i++) {
             TravProf curr = this.travelerList.get(i);
-            if (curr.gettravAgentID() == travAgentID & curr.getLastName() == lastName) {
+            if (curr.gettravAgentID().equals(travAgentID) & curr.getLastName().equals(lastName)) {
                 return curr;
             }
         }
@@ -66,10 +65,17 @@ public class TravProfDB {
         objectOutputStream.writeObject(travelerList);
         objectOutputStream.close();
     }
-    void initializeDataBase() throws IOException,ClassNotFoundException{     // Load
+    void initializeDataBase() throws IOException, ClassNotFoundException {     // Load
         FileInputStream inputStream = new FileInputStream(this.dbName);
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
-        this.travelerList = (ArrayList<TravProf>)objectInputStream.readObject();
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            this.travelerList = (ArrayList<TravProf>)objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (EOFException eofex) {
+            this.travelerList = new ArrayList<TravProf>();
+        } catch (IOException ioex) {
+            throw ioex;
+        }
     }
 }

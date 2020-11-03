@@ -7,7 +7,6 @@ public class TravProfInterface {
 
     public TravProfInterface(String dbFile) throws IOException, ClassNotFoundException {
         db = new TravProfDB(dbFile);
-        System.out.println(db);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -161,7 +160,12 @@ public class TravProfInterface {
         System.out.printf("Trip Cost: %s%n", tp.getTripCost());
         System.out.printf("Travel Type: %s%n", tp.getTravelType());
         System.out.printf("Payment Type: %s%n", tp.getPaymentType());
-        System.out.printf("Medical Condition: %s%n", tp.getMedCondInfo());
+
+        MedCond m = tp.getMedCondInfo();
+        System.out.printf("Medical Contact: %s%n", m.getMdContact());
+        System.out.printf("Medical Phone #: %s%n", m.getMdPhone());
+        System.out.printf("Allergies: %s%n", m.getAlgType());
+        System.out.printf("Illnesses: %s%n", m.getIllType());
 
         return true;
     }
@@ -173,7 +177,7 @@ public class TravProfInterface {
 
         TravProf p = TravProfInterface.db.findFirstProfile();
         while (p != null) {
-            if (p.gettravAgentID() == travAgentID) {
+            if (p.gettravAgentID().equals(travAgentID)) {
                 displayTravProf(p);
             }
             p = TravProfInterface.db.findNextProfile();

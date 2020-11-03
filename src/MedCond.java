@@ -1,4 +1,6 @@
-public class MedCond {
+import java.io.Serializable;
+
+public class MedCond implements Serializable {
     String mdContact, mdPhone, algType, illType;
 
     public MedCond(String mdContact, String mdPhone, String algType, String illType) {
