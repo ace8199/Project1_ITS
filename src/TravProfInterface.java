@@ -64,9 +64,12 @@ public class TravProfInterface {
     public void prepareGUI(){
         //set the layout
         //layout detail : https://javatutorial.net/java-swing-jframe-layouts
-        mainFrame = new JFrame("Main Menu");
+        mainFrame = new JFrame("ITS GUI Interface");
         mainFrame.setSize(500,450);
         mainFrame.setLayout(null);
+        // iconURL is null when not found
+        mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("plane.jpg")));
+
 
         /*
             Panel p Main Menu
@@ -993,7 +996,7 @@ public class TravProfInterface {
                 } else {
                     p.setVisible(true);
                     p8.setVisible(false);
-                    status_label.setText("No Profiles to view");
+                    status_label.setText("No more Profiles to view");
 
 
                 }
